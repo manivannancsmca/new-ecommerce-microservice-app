@@ -1,0 +1,18 @@
+
+@baseUrl = http://localhost:8082/api/v1/users
+
+
+### 1. (Create Product)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "mani",
+  "email": "mani@test.com",
+  "phone": 124567890,
+  "status": "ACTIVE"
+}
+
+### 2. (Get Product)
+GET {{baseUrl}}/10
+Content-Type: application/json
