@@ -20,14 +20,14 @@ public class ProductSyncService {
 
     private final ProductSearchRepository repository;
 
-    public void handleCreated(ProductCreatedEvent event) {
-        String docId = String.valueOf(event.getProductId());
-        
+    public void handleCreated(ProductUpdatedEvent event) {
+        String docId = String.valueOf(event.getId());
+        log.info("docId : {} ", docId);
         // Idempotency check: Ignore if an equal or newer record exists
-        if (isStale(docId, event.getVersion())) {
-            log.warn("Skipping stale Created event for productId={}", event.getProductId());
-            return;
-        }
+        // if (isStale(docId, event.getVersion())) {
+        //     log.warn("Skipping stale Created event for productId={}", event.getProductId());
+        //     return;
+        // }
 
         ProductDocument doc = ProductDocument.builder()
                 .id(docId)
@@ -36,34 +36,34 @@ public class ProductSyncService {
                 .price(event.getPrice())
                 .categoryId(event.getCategoryId())
                 .active(event.getActive())
-                .version(event.getVersion() != null ? event.getVersion() : System.currentTimeMillis())
+                //.version(event.getVersion() != null ? event.getVersion() : System.currentTimeMillis())
                 .build();
 
         repository.save(doc);
         log.info("Indexed product in Elasticsearch: {}", docId);
     }
 
-    public void handleUpdated(ProductUpdatedEvent event) {
-        String docId = String.valueOf(event.getProductId());
+    // public void handleUpdated(ProductUpdatedEvent event) {
+    //     String docId = String.valueOf(event.getProductId());
 
-        if (isStale(docId, event.getVersion())) {
-            log.warn("Skipping stale Updated event for productId={}", event.getProductId());
-            return;
-        }
+    //     if (isStale(docId, event.getVersion())) {
+    //         log.warn("Skipping stale Updated event for productId={}", event.getProductId());
+    //         return;
+    //     }
 
-        ProductDocument doc = ProductDocument.builder()
-                .id(docId)
-                .name(event.getName())
-                .sku(event.getSku())
-                .price(event.getPrice())
-                .categoryId(event.getCategoryId())
-                .active(event.getActive())
-                .version(event.getVersion() != null ? event.getVersion() : System.currentTimeMillis())
-                .build();
+    //     ProductDocument doc = ProductDocument.builder()
+    //             .id(docId)
+    //             .name(event.getName())
+    //             .sku(event.getSku())
+    //             .price(event.getPrice())
+    //             .categoryId(event.getCategoryId())
+    //             .active(event.getActive())
+    //             .version(event.getVersion() != null ? event.getVersion() : System.currentTimeMillis())
+    //             .build();
 
-        repository.save(doc);
-        log.info("Updated product in Elasticsearch: {}", docId);
-    }
+    //     repository.save(doc);
+    //     log.info("Updated product in Elasticsearch: {}", docId);
+    // }
 
     public void handleDeleted(ProductDeletedEvent event) {
         String docId = String.valueOf(event.getProductId());
@@ -73,9 +73,9 @@ public class ProductSyncService {
         }
     }
 
-    private boolean isStale(String docId, Long newVersion) {
-        if (newVersion == null) return false;
-        Optional<ProductDocument> existing = repository.findById(docId);
-        return existing.map(doc -> doc.getVersion() != null && doc.getVersion() >= newVersion).orElse(false);
-    }
+    // private boolean isStale(String docId, Long newVersion) {
+    //     if (newVersion == null) return false;
+    //     Optional<ProductDocument> existing = repository.findById(docId);
+    //     return existing.map(doc -> doc.getVersion() != null && doc.getVersion() >= newVersion).orElse(false);
+    // }
 }

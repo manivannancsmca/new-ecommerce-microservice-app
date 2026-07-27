@@ -2,6 +2,7 @@ package com.ecommerce.app.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class ProductService {
+
+    @Value("${app.kafka.topics.product-events}")
+    private String productTopic;
 
     private final ProductRepository productRepository;
     private final KafkaTemplate<String, Object> kafkaTemplate;
@@ -35,7 +39,7 @@ public class ProductService {
             savedProduct.getActive()
         );
 
-        kafkaTemplate.send("product-events-topic", savedProduct.getSku(), event);
+        kafkaTemplate.send(productTopic, savedProduct.getSku(), event);
 
         return savedProduct;
     }

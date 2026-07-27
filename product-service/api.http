@@ -7,10 +7,10 @@ POST {{baseUrl}}
 Content-Type: application/json
 
 {
-  "name": "Sony Headset",
-  "sku": "AIRPODS-S1100",
-  "price": 279.99,
-  "categoryId": 105,
+  "name": "Nokia Keypad",
+  "sku": "NOKIA-N1000",
+  "price": 50.00,
+  "categoryId": 107,
   "active": true
 }
 

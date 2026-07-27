@@ -37,6 +37,6 @@ public class ProductDocument {
     @Field(type = FieldType.Boolean)
     private Boolean active;
 
-    @Field(type = FieldType.Long)
-    private Long version; // Used to ignore stale updates
+    // @Field(type = FieldType.Long)
+    // private Long version; // Used to ignore stale updates
 }

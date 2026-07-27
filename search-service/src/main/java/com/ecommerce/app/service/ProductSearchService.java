@@ -12,6 +12,8 @@ import org.springframework.util.StringUtils;
 import com.ecommerce.app.document.ProductDocument;
 import com.ecommerce.app.dto.ProductSearchRequest;
 import com.ecommerce.app.dto.ProductSearchResponse;
+import com.ecommerce.app.exception.ProductNotFoundException;
+import com.ecommerce.app.repository.ProductSearchRepository;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.json.JsonData;
@@ -23,6 +25,8 @@ import java.util.List;
 public class ProductSearchService {
 
     private final ElasticsearchOperations elasticsearchOperations;
+
+    private final ProductSearchRepository searchRepository;
 
     public ProductSearchResponse search(ProductSearchRequest request) {
         PageRequest pageable = PageRequest.of(request.getPage(), request.getSize());
@@ -73,5 +77,50 @@ public class ProductSearchService {
                 .page(request.getPage())
                 .size(request.getSize())
                 .build();
+    }
+
+    public ProductSearchResponse searchByName(String name, int page, int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+
+        var boolQuery = new BoolQuery.Builder();
+
+        // 1. Filter only active products
+        boolQuery.must(m -> m.term(t -> t.field("active").value(true)));
+
+        // 2. Perform fuzzy full-text search strictly on the 'name' field
+        if (name != null && !name.trim().isEmpty()) {
+            boolQuery.must(m -> m.match(k -> k
+                    .field("name")
+                    .query(name.trim())
+                    .fuzziness("AUTO") // Allows minor typos (e.g., 'iphne' matches 'iphone')
+            ));
+        }
+
+        NativeQuery searchQuery = NativeQuery.builder()
+                .withQuery(boolQuery.build()._toQuery())
+                .withPageable(pageable)
+                .build();
+
+        SearchHits<ProductDocument> hits = elasticsearchOperations.search(searchQuery, ProductDocument.class);
+
+        List<ProductDocument> products = hits.stream()
+                .map(SearchHit::getContent)
+                .toList();
+
+        return ProductSearchResponse.builder()
+                .products(products)
+                .totalHits(hits.getTotalHits())
+                .page(page)
+                .size(size)
+                .build();
+
+    }
+
+    public ProductDocument searchByProductId(Long productId) {
+        String docId = String.valueOf(productId);
+
+        return searchRepository.findById(docId)
+                .filter(ProductDocument::getActive)
+                .orElseThrow(() -> new ProductNotFoundException(productId));
     }
 }

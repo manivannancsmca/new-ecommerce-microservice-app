@@ -1,0 +1,24 @@
+### Base Variables
+@baseUrl = http://localhost:8086/api/v1/search/products
+
+### 1. Get Product by Product ID
+GET {{baseUrl}}/11
+Accept: application/json
+
+###
+
+### 2. Get Product by Non-Existent or Inactive Product ID (Returns 404 Not Found)
+GET {{baseUrl}}/99999
+Accept: application/json
+
+###
+
+### 3. Search Products by Name (Fuzzy Match)
+GET {{baseUrl}}/by-name?name=Nokia&page=0&size=10
+Accept: application/json
+
+###
+
+### 4. Search Products by Name with Typos (e.g., 'iphne' matches 'iphone')
+GET {{baseUrl}}/by-name?name=iphne&page=0&size=5
+Accept: application/json

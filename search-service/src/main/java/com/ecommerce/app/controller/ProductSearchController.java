@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.ecommerce.app.document.ProductDocument;
 import com.ecommerce.app.dto.ProductSearchRequest;
 import com.ecommerce.app.dto.ProductSearchResponse;
 import com.ecommerce.app.service.ProductSearchService;
@@ -35,5 +36,20 @@ public class ProductSearchController {
         request.setSize(size);
 
         return ResponseEntity.ok(searchService.search(request));
+    }
+
+    @GetMapping("/by-name")
+    public ResponseEntity<ProductSearchResponse> searchByName(
+            @RequestParam String name,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        ProductSearchResponse response = searchService.searchByName(name, page, size);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductDocument> getProductById(@PathVariable Long productId) {
+        ProductDocument productDocument = searchService.searchByProductId(productId);
+        return ResponseEntity.ok(productDocument);
     }
 }

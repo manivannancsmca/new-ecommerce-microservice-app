@@ -21,17 +21,18 @@ public class EventConsumerService {
         topics = "${app.kafka.topics.product-events}",
         groupId = "${spring.kafka.consumer.group-id}"
     )
-    public void consume(BaseProductEvent event) {
-        log.info("Received event type {} for product id {}", event.getClass().getSimpleName(), event.getProductId());
+    public void consume(ProductUpdatedEvent event) {
+        log.info("Received event {}", event);
 
-        if (event instanceof ProductCreatedEvent createdEvent) {
-            syncService.handleCreated(createdEvent);
-        } else if (event instanceof ProductUpdatedEvent updatedEvent) {
-            syncService.handleUpdated(updatedEvent);
-        } else if (event instanceof ProductDeletedEvent deletedEvent) {
-            syncService.handleDeleted(deletedEvent);
-        } else {
-            log.warn("Unknown event type encountered: {}", event.getClass());
-        }
+        syncService.handleCreated(event);
+        // if (event instanceof ProductCreatedEvent createdEvent) {
+        //     syncService.handleCreated(createdEvent);
+        // } else if (event instanceof ProductUpdatedEvent updatedEvent) {
+        //     syncService.handleUpdated(updatedEvent);
+        // } else if (event instanceof ProductDeletedEvent deletedEvent) {
+        //     syncService.handleDeleted(deletedEvent);
+        // } else {
+        //     log.warn("Unknown event type encountered: {}", event.getClass());
+        // }
     }
 }

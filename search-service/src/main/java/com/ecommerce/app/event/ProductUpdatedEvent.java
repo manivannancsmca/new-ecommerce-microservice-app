@@ -1,20 +1,21 @@
 package com.ecommerce.app.event;
 
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-
 import java.math.BigDecimal;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Data
-@EqualsAndHashCode(callSuper = true)
-@SuperBuilder
+@AllArgsConstructor
 @NoArgsConstructor
-public class ProductUpdatedEvent extends BaseProductEvent {
-    private String name;
-    private BigDecimal price;
-    private Long categoryId;
-    private Boolean active;
+@Builder
+public class ProductUpdatedEvent {
+    Long id;
+    String name; 
+    String sku;
+    BigDecimal price; 
+    Long categoryId;
+    Boolean active;    
 }

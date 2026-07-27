@@ -11,7 +11,8 @@ import java.time.Instant;
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME,
     include = JsonTypeInfo.As.PROPERTY,
-    property = "eventType"
+    property = "eventType",
+    visible = true // <-- REQUIRED: Ensures Jackson reads and writes the property explicitly
 )
 @JsonSubTypes({
     @JsonSubTypes.Type(value = ProductCreatedEvent.class, name = "PRODUCT_CREATED"),
@@ -25,5 +26,5 @@ public abstract class BaseProductEvent {
     private Long productId;
     private String sku;
     private Instant timestamp;
-    private Long version; // Optimistic locking version
+    private Long version;
 }
