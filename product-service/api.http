@@ -1,0 +1,19 @@
+
+@baseUrl = http://localhost:8081/api/v1/products
+
+
+### 1. (Create Product)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "Sony Headset",
+  "sku": "AIRPODS-S1100",
+  "price": 279.99,
+  "categoryId": 105,
+  "active": true
+}
+
+### 2. (Get Product)
+GET {{baseUrl}}/2
+Content-Type: application/json
