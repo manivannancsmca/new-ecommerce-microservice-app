@@ -14,6 +14,126 @@ Content-Type: application/json
   "active": true
 }
 
+### 2. Apple iPhone 16
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "Apple iPhone 16",
+  "sku": "APPLE-IP16",
+  "price": 999.99,
+  "categoryId": 101,
+  "active": true
+}
+
+### 3. Samsung Galaxy S26
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "Samsung Galaxy S26",
+  "sku": "SAMSUNG-S26",
+  "price": 949.99,
+  "categoryId": 101,
+  "active": true
+}
+
+### 4. Sony WH-1000XM6 Headphones
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "Sony WH-1000XM6",
+  "sku": "SONY-WH1000XM6",
+  "price": 399.99,
+  "categoryId": 102,
+  "active": true
+}
+
+### 5. Dell XPS 15 Laptop
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "Dell XPS 15",
+  "sku": "DELL-XPS15",
+  "price": 1799.00,
+  "categoryId": 103,
+  "active": true
+}
+
+### 6. Logitech MX Master 3S Mouse
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "Logitech MX Master 3S",
+  "sku": "LOGI-MX3S",
+  "price": 99.99,
+  "categoryId": 104,
+  "active": true
+}
+
+### 7. Apple Magic Keyboard
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "Apple Magic Keyboard",
+  "sku": "APPLE-MK2026",
+  "price": 149.99,
+  "categoryId": 104,
+  "active": true
+}
+
+### 8. LG 55-inch OLED TV
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "LG OLED 55 TV",
+  "sku": "LG-OLED55",
+  "price": 1299.00,
+  "categoryId": 105,
+  "active": true
+}
+
+### 9. Canon EOS R10 Camera
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "Canon EOS R10",
+  "sku": "CANON-R10",
+  "price": 899.00,
+  "categoryId": 106,
+  "active": true
+}
+
+### 10. Amazon Kindle Paperwhite
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "Kindle Paperwhite",
+  "sku": "KINDLE-PW2026",
+  "price": 189.99,
+  "categoryId": 108,
+  "active": true
+}
+
+### 11. HP LaserJet Pro Printer
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "HP LaserJet Pro MFP",
+  "sku": "HP-LJ-PRO",
+  "price": 279.99,
+  "categoryId": 109,
+  "active": true
+}
+
 ### 2. (Get Product)
 GET {{baseUrl}}/2
 Content-Type: application/json

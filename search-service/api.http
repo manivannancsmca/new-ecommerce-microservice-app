@@ -14,7 +14,7 @@ Accept: application/json
 ###
 
 ### 3. Search Products by Name (Fuzzy Match)
-GET {{baseUrl}}/by-name?name=Nokia&page=0&size=10
+GET {{baseUrl}}/by-name?name=Appl&page=0&size=10
 Accept: application/json
 
 ###
