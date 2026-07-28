@@ -5,10 +5,14 @@ spring:
   ai:
     mcp:
       server:
+        annotation-scanner:
+          enabled: true
         enabled: true
         name: product-service-mcp
         version: 1.0.0
         protocol: SSE
+        sse-endpoint: /mcp/sse         # Overrides default /sse to /mcp/sse
+        sse-message-endpoint: /mcp/message
         webmvc:
           enabled: true
 

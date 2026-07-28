@@ -14,11 +14,9 @@ spring:
         enabled: true
         name: agentic-ai-client
         version: 1.0.0
-        type: SYNC # Set to SYNC so Spring creates SyncMcpToolCallbackProvider
+        type: SYNC
         sse:
           connections:
-            # Connection 4: Product Microservice
             product-service:
               url: http://localhost:8081
-              sse-endpoint: /sse #/mcp/sse
-
+              sse-endpoint: /sse   # Changed from /mcp/sse to /sse
