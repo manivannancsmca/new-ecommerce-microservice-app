@@ -25,6 +25,11 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
+  flyway:
+    enabled: true
+    table: flyway_schema_history_payment_transactions
+    baseline-on-migrate: true
+    baseline-version: 0
 management:
   endpoints:
     web:

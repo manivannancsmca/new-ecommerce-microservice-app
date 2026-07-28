@@ -3,6 +3,8 @@ package com.ecommerce.app.messaging;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import com.ecommerce.app.event.PaymentFailedEvent;
+import com.ecommerce.app.event.PaymentSuccessEvent;
 import com.ecommerce.app.event.StockReservationFailedEvent;
 import com.ecommerce.app.event.StockReservedEvent;
 import com.ecommerce.app.service.OrderService;
@@ -25,5 +27,17 @@ public class SagaEventListener {
     public void handleStockReservationFailed(StockReservationFailedEvent event) {
         // Execute compensating action: cancel order
         orderService.cancelOrder(event.orderId(), event.reason());
+    }
+
+    @KafkaListener(topics = "payment-success-topic", groupId = "order-saga-group")
+    public void handlePaymentSuccess(PaymentSuccessEvent event) {
+        // Execute compensating action: cancel order
+        orderService.orderDeliveryCompleted(event);
+    }
+
+    @KafkaListener(topics = "payment-failed-topic", groupId = "order-saga-group")
+    public void handlePaymentFailed(PaymentFailedEvent event) {
+        // Execute compensating action: cancel order
+        orderService.orderDeliveryFailed(event);
     }
 }

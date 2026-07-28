@@ -9,6 +9,8 @@ import com.ecommerce.app.dto.CreateOrderRequest;
 import com.ecommerce.app.dto.ProductResponse;
 import com.ecommerce.app.entity.PurchaseOrder;
 import com.ecommerce.app.event.OrderCreatedEvent;
+import com.ecommerce.app.event.PaymentFailedEvent;
+import com.ecommerce.app.event.PaymentSuccessEvent;
 import com.ecommerce.app.exception.ProductNotFoundException;
 import com.ecommerce.app.repository.OrderRepository;
 
@@ -29,7 +31,6 @@ public class OrderService {
 
         try {
             ProductResponse product = productFeignClient.getProductById(request.productId());
-
             // Step 1: Save order in PENDING state
             PurchaseOrder order = new PurchaseOrder(request.userId(), request.totalAmount(), request.productId());
             PurchaseOrder savedOrder = orderRepository.save(order);
@@ -48,7 +49,6 @@ public class OrderService {
             // Handle specific logic when product is missing
             log.error("Cannot create order: {}", e.getMessage());
             throw e;
-
         }
 
     }
@@ -65,6 +65,20 @@ public class OrderService {
     public void cancelOrder(Long orderId, String reason) {
         orderRepository.findById(orderId).ifPresent(order -> {
             order.setStatus("CANCELLED");
+            orderRepository.save(order);
+        });
+    }
+
+    public void orderDeliveryFailed(PaymentFailedEvent event) {
+        orderRepository.findById(event.orderId()).ifPresent( order -> {
+            order.setStatus("PAYMENT-FAILED");
+            orderRepository.save(order);
+        });    
+    }
+
+    public void orderDeliveryCompleted(PaymentSuccessEvent event) {
+        orderRepository.findById(event.orderId()).ifPresent( order -> {
+            order.setStatus("PAYMENT-COMPLETED");
             orderRepository.save(order);
         });
     }

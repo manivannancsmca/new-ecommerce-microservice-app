@@ -8,9 +8,9 @@ Content-Type: application/json
 
 {
   "userId": 1,
-  "productId": 1,
+  "productId": 11,
   "quantity": 2,
-  "totalAmount": 299.98
+  "totalAmount": 100.00
 }
 
 ###
