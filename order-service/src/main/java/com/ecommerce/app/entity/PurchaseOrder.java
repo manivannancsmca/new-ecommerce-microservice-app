@@ -26,6 +26,9 @@ public class PurchaseOrder {
     @Column(nullable = false)
     private Long userId;
 
+    @Column(nullable = false)
+    private Long productId;
+
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal totalAmount;
 
@@ -38,9 +41,10 @@ public class PurchaseOrder {
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
-    public PurchaseOrder(Long userId, BigDecimal totalAmount) {
+    public PurchaseOrder(Long userId, BigDecimal totalAmount, Long productId) {
         this.userId = userId;
         this.totalAmount = totalAmount;
+        this.productId = productId;
         this.status = "PENDING";
         this.createdAt = Instant.now();
     }

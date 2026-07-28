@@ -35,6 +35,12 @@ spring:
       properties:
         spring.json.add.type.headers: true
 
+  flyway:
+    enabled: true
+    table: flyway_schema_history_product
+    baseline-on-migrate: true
+    baseline-version: 0
+
 management:
   endpoints:
     web:

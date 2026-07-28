@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecommerce.app.dto.ProductResponse;
 import com.ecommerce.app.entity.Product;
 import com.ecommerce.app.service.ProductService;
 
@@ -26,21 +27,18 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<?> create(
+    public ResponseEntity<ProductResponse> create(
             @Valid @RequestBody Product request) {
 
-        productService.createOrUpdateProduct(request);
-
-        return ResponseEntity.status(HttpStatus.OK)
-                .body("Product created successfully");
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(productService.createOrUpdateProduct(request));
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<?> getProduct(@PathVariable long productId) {
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable long productId) {
         log.info("productId : ", productId);
-       Product product = productService.getProductById(productId);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(product);
+                .body(productService.getProductById(productId));
     }
 }

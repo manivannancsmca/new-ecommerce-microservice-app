@@ -4,6 +4,8 @@ CREATE TABLE purchase_orders
 
     user_id BIGINT NOT NULL,
 
+    product_id BIGINT NOT NULL,
+
     total_amount DECIMAL(10,2) NOT NULL,
 
     status VARCHAR(30) NOT NULL DEFAULT 'PENDING',

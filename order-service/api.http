@@ -1,0 +1,22 @@
+### Variables
+@baseUrl = http://localhost:8082/api/v1/orders
+@orderId = 1
+
+### 1. Create a New Order (POST)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "productId": 1,
+  "quantity": 2,
+  "totalAmount": 299.98
+}
+
+###
+
+### 2. Fetch Order by ID (GET)
+GET {{baseUrl}}/1
+Accept: application/json
+
+###

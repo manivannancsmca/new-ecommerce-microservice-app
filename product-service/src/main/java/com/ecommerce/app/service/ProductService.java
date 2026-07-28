@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.app.dto.ProductResponse;
 import com.ecommerce.app.entity.Product;
 import com.ecommerce.app.event.ProductUpdatedEvent;
 import com.ecommerce.app.repository.ProductRepository;
@@ -26,7 +27,7 @@ public class ProductService {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     @Transactional
-    public Product createOrUpdateProduct(Product product) {
+    public ProductResponse createOrUpdateProduct(Product product) {
         Product savedProduct = productRepository.save(product);
         
         // Emit Event to Kafka for CQRS indexing in Elasticsearch
@@ -41,15 +42,26 @@ public class ProductService {
 
         kafkaTemplate.send(productTopic, savedProduct.getSku(), event);
 
-        return savedProduct;
+       return convertEntityToDto(savedProduct);
     }
 
-    public Product getProductById(long productId) {
+    private ProductResponse convertEntityToDto(Product savedProduct) {
+      return ProductResponse.builder()
+        .id(savedProduct.getId())
+        .name(savedProduct.getName())
+        .sku(savedProduct.getSku())
+        .price(savedProduct.getPrice())
+        .categoryId(savedProduct.getCategoryId())
+        .active(savedProduct.getActive())
+        .build();
+    }
+
+    public ProductResponse getProductById(long productId) {
         
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new RuntimeException("product is not found"));
 
-       return product;
+       return convertEntityToDto(product);
     }
 
 }
