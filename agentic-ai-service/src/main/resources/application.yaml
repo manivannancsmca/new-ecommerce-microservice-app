@@ -17,19 +17,8 @@ spring:
         type: SYNC # Set to SYNC so Spring creates SyncMcpToolCallbackProvider
         sse:
           connections:
-            # Connection 1: Order Microservice
-            order-service:
-              url: http://localhost:8081
-              sse-endpoint: /mcp/sse
-            # Connection 2: Inventory Microservice
-            inventory-service:
-              url: http://localhost:8082
-              sse-endpoint: /mcp/sse
-            # Connection 3: Payment Microservice
-            payment-service:
-              url: http://localhost:8083
-              sse-endpoint: /mcp/sse
             # Connection 4: Product Microservice
             product-service:
-              url: http://localhost:8084
+              url: http://localhost:8081
               sse-endpoint: /mcp/sse
+
