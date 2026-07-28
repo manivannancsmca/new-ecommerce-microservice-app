@@ -1,3 +1,29 @@
+server:
+  port: 8000
+
 spring:
-  application:
-    name: agentic-ai-service
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: qwen2.5:7b
+          temperature: 0.2
+    mcp:
+      client:
+        enabled: true
+        type: ASYNC # WebFlux SSE Client
+        connections:
+          # Connection 1: Order Microservice
+          order-service:
+            url: http://localhost:8081
+            sse-endpoint: /mcp/sse
+          # Connection 2: Inventory Microservice
+          inventory-service:
+            url: http://localhost:8082
+            sse-endpoint: /mcp/sse
+          # Connection 3: Payment Microservice
+          payment-service:
+            url: http://localhost:8083
+            sse-endpoint: /mcp/sse
+          # ... Add remaining microservices here ...
