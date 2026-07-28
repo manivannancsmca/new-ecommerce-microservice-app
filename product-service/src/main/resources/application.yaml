@@ -2,6 +2,16 @@ server:
   port: 8081
 
 spring:
+  ai:
+    mcp:
+      server:
+        enabled: true
+        name: product-service-mcp
+        version: 1.0.0
+        protocol: SSE
+        webmvc:
+          enabled: true
+
   application:
     name: product-catalog-service
   datasource:
@@ -13,6 +23,7 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+
   data:
     redis:
       host: ${REDIS_HOST:localhost}
