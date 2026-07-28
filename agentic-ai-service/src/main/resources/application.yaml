@@ -20,5 +20,5 @@ spring:
             # Connection 4: Product Microservice
             product-service:
               url: http://localhost:8081
-              sse-endpoint: /mcp/sse
+              sse-endpoint: /sse #/mcp/sse
 

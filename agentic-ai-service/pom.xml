@@ -47,7 +47,7 @@
 		<!-- Spring AI WebFlux MCP Client Starter -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-starter-mcp-client-webflux</artifactId>
+			<artifactId>spring-ai-starter-mcp-client</artifactId>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
