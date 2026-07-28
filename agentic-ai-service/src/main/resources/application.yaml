@@ -9,11 +9,13 @@ spring:
         options:
           model: qwen2.5:7b
           temperature: 0.2
+          num-ctx: 8192
     mcp:
       client:
         enabled: true
         name: agentic-ai-client
         version: 1.0.0
+        request-timeout: 60s
         type: SYNC
         sse:
           connections:
